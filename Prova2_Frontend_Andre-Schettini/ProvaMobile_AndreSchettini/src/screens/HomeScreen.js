@@ -18,7 +18,8 @@ export default function HomeScreen({ navigation }) {
       });
       setReceitas(response.data);
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível carregar as receitas. Verifique sua conexão.");
+      console.error("Erro ao carregar receitas:", error);
+      Alert.alert("Erro", "Não foi possível carregar a lista. Verifique a conexão com o Backend.");
     } finally {
       setLoading(false);
     }
@@ -29,7 +30,7 @@ export default function HomeScreen({ navigation }) {
   }, [busca]));
 
   const deletar = (id) => {
-    Alert.alert("Confirmação", "Deseja realmente excluir este registro?", [
+    Alert.alert("Confirmação", "Tem certeza que deseja excluir esta receita?", [
       { text: "Cancelar", style: "cancel" },
       { 
         text: "Excluir", 
@@ -37,9 +38,10 @@ export default function HomeScreen({ navigation }) {
         onPress: async () => {
           try {
             await api.delete(`/${id}`);
-            Alert.alert("Sucesso", "Registro removido com sucesso!");
+            Alert.alert("Sucesso", "Receita removida!");
             carregarReceitas(); 
           } catch (error) {
+            console.error("Erro ao deletar:", error);
             Alert.alert("Erro", "Não foi possível excluir o registro.");
           }
         }

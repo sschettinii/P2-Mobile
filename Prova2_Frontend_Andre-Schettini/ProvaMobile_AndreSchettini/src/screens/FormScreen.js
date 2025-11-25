@@ -31,12 +31,18 @@ export default function FormScreen({ route, navigation }) {
       }
       navigation.goBack(); 
     } catch (error) {
+      // Usamos console.log para não gerar pop-up de erro na tela do Expo
+      console.log("Log de Erro:", error);
+
       if (error.response?.status === 400 && error.response?.data) {
+        // AQUI ESTÁ A MUDANÇA:
+        // Apenas atualizamos o estado 'erros' para pintar os campos de vermelho.
+        // Removemos o Alert.alert() daqui.
         setErros(error.response.data);
-        Alert.alert("Atenção", "Verifique os campos obrigatórios.");
       } else if (error.response?.status === 404) {
         Alert.alert("Erro", "Registro não encontrado no servidor.");
       } else {
+        // Erros genéricos (ex: servidor fora do ar) ainda mostram alerta
         Alert.alert("Erro", "Ocorreu um erro inesperado. Tente novamente.");
       }
     }
@@ -51,7 +57,7 @@ export default function FormScreen({ route, navigation }) {
         onChangeText={setNome} 
         placeholder="Ex: Bolo de Chocolate"
       />
-      {erros.nome && <Text style={styles.erro}>{erros.nome}</Text>}
+      {erros.nome && <Text style={styles.erroText}>{erros.nome}</Text>}
 
       <Text style={styles.label}>Tempo de Preparo:</Text>
       <TextInput 
@@ -60,7 +66,7 @@ export default function FormScreen({ route, navigation }) {
         onChangeText={setTempoDePreparo} 
         placeholder="Ex: 40 minutos"
       />
-      {erros.tempoDePreparo && <Text style={styles.erro}>{erros.tempoDePreparo}</Text>}
+      {erros.tempoDePreparo && <Text style={styles.erroText}>{erros.tempoDePreparo}</Text>}
 
       <Text style={styles.label}>Ingredientes:</Text>
       <TextInput 
@@ -71,7 +77,7 @@ export default function FormScreen({ route, navigation }) {
         numberOfLines={4}
         placeholder="Liste os ingredientes..."
       />
-      {erros.ingredientes && <Text style={styles.erro}>{erros.ingredientes}</Text>}
+      {erros.ingredientes && <Text style={styles.erroText}>{erros.ingredientes}</Text>}
 
       <Text style={styles.label}>Modo de Preparo:</Text>
       <TextInput 
@@ -82,7 +88,7 @@ export default function FormScreen({ route, navigation }) {
         numberOfLines={6}
         placeholder="Passo a passo..."
       />
-      {erros.modoDePreparo && <Text style={styles.erro}>{erros.modoDePreparo}</Text>}
+      {erros.modoDePreparo && <Text style={styles.erroText}>{erros.modoDePreparo}</Text>}
 
       <TouchableOpacity style={styles.btn} onPress={handleSalvar}>
         <Text style={styles.btnText}>Salvar Receita</Text>
@@ -95,9 +101,9 @@ const styles = StyleSheet.create({
   container: { padding: 20, paddingBottom: 50 },
   label: { marginTop: 15, fontWeight: 'bold', color: '#333' },
   input: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, marginTop: 5, fontSize: 16 },
-  inputError: { borderColor: 'red', borderWidth: 1 },
+  inputError: { borderColor: '#dc3545', borderWidth: 2 },
   area: { textAlignVertical: 'top', minHeight: 100 },
   btn: { backgroundColor: '#0d6efd', padding: 15, borderRadius: 8, marginTop: 30, alignItems: 'center' },
   btnText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  erro: { color: 'red', fontSize: 14, marginTop: 2 }
+  erroText: { color: '#dc3545', fontSize: 14, marginTop: 4, fontWeight: '500' }
 });
