@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="modal fade" id="receitaModal" tabindex="-1" aria-labelledby="receitaModalLabel" aria-hidden="true" th:fragment="modalReceita">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="receitaModalLabel">Adicionar/Editar Receita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="receitaForm" th:action="@{/receitas/salvar}" th:object="${receita}" method="post">
+                    <input type="hidden" th:field="*{id}" id="id">
+
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome da Receita</label>
+                        <input type="text" class="form-control" th:field="*{nome}" id="nome">
+                        <div id="error-nome" class="text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ingredientes" class="form-label">Ingredientes</label>
+                        <textarea class="form-control" th:field="*{ingredientes}" id="ingredientes" rows="4"></textarea>
+                        <div id="error-ingredientes" class="text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modoDePreparo" class="form-label">Modo de Preparo</label>
+                        <textarea class="form-control" th:field="*{modoDePreparo}" id="modoDePreparo" rows="6"></textarea>
+                        <div id="error-modoDePreparo" class="text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tempoDePreparo" class="form-label">Tempo de Preparo (ex: 45 min)</label>
+                        <input type="text" class="form-control" th:field="*{tempoDePreparo}" id="tempoDePreparo">
+                        <div id="error-tempoDePreparo" class="text-danger"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary" id="btnSalvarReceita">Salvar Receita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
