@@ -1,0 +1,20 @@
+# Dependencias do Node (Front)
+node_modules/
+.expo/
+npm-debug.log
+yarn-error.log
+
+# Build do Java (Back)
+target/
+*.class
+.gradle/
+build/
+
+# Arquivos de Sistema e IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Arquivos comprimidos
+*.zip
+*.rar
